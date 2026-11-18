@@ -1,36 +1,5 @@
-const categories = [
-  ["🚗", "سيارات ومركبات"], ["🏠", "عقارات"], ["📱", "جوالات وأجهزة"],
-  ["🛋️", "أثاث ومنزل"], ["💼", "وظائف وخدمات"], ["🐄", "مواشي وحيوانات"],
-  ["🛠️", "معدات وأدوات"], ["👕", "أزياء ومستلزمات"],
-];
-
-export default function HomePage() {
-  return (
-    <main>
-      <header style={{ background: "var(--navy)", color: "white", padding: "16px max(20px, calc((100% - 1100px)/2))" }}>
-        <div style={{ maxWidth: 1100, margin: "auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
-          <div><strong style={{ fontSize: 25 }}>حراج <span style={{ color: "#ef5964" }}>السودان</span></strong><div style={{ fontSize: 12, opacity: .8 }}>سوقك.. من مكانك</div></div>
-          <button style={{ background: "var(--red)", color: "white", border: 0, borderRadius: 10, padding: "10px 16px", fontWeight: 700 }}>＋ أضف إعلانك</button>
-        </div>
-      </header>
-      <section style={{ maxWidth: 1100, margin: "34px auto", padding: "0 18px" }}>
-        <div style={{ background: "linear-gradient(120deg,#172b46,#263f60)", color: "white", borderRadius: 20, padding: "30px 24px", textAlign: "center" }}>
-          <h1 style={{ margin: "0 0 8px", fontSize: 30 }}>كل السودان.. في حراج واحد</h1>
-          <p style={{ margin: "0 0 20px", opacity: .85 }}>اكتشف الإعلانات أو اعرض ما تريد بيعه بسهولة</p>
-          <div style={{ display: "flex", gap: 8, maxWidth: 650, margin: "auto", background: "white", borderRadius: 12, padding: 6 }}>
-            <input aria-label="ابحث في الإعلانات" placeholder="ماذا تبحث عنه؟" style={{ flex: 1, minWidth: 0, border: 0, outline: 0, padding: 10, color: "#172033" }} />
-            <button style={{ background: "var(--red)", color: "white", border: 0, borderRadius: 9, padding: "9px 20px", fontWeight: 700 }}>بحث</button>
-          </div>
-        </div>
-        <h2 style={{ margin: "30px 0 16px", fontSize: 21 }}>تصفح الأقسام</h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(135px,1fr))", gap: 12 }}>
-          {categories.map(([icon, name]) => <div key={name} style={{ background: "white", border: "1px solid #e8eaf0", borderRadius: 14, padding: "20px 10px", textAlign: "center", fontWeight: 700 }}><div style={{ fontSize: 29, marginBottom: 8 }}>{icon}</div>{name}</div>)}
-        </div>
-        <div style={{ marginTop: 28, background: "white", border: "1px solid #e8eaf0", borderRadius: 14, padding: 20, color: "var(--muted)", textAlign: "center" }}>
-          ستظهر أحدث الإعلانات هنا بعد تفعيل قاعدة البيانات.
-        </div>
-      </section>
-      <footer style={{ background: "var(--navy)", color: "white", textAlign: "center", padding: 20, marginTop: 50, fontSize: 13 }}>حراج السودان © {new Date().getFullYear()} — منصة إعلانات مستقلة</footer>
-    </main>
-  );
-}
+"use client";
+import { useMemo, useState } from "react";
+const cats=[["🚗","سيارات ومركبات"],["🏠","عقارات"],["📱","جوالات وأجهزة"],["🛋️","أثاث ومنزل"],["💼","وظائف وخدمات"],["🐄","مواشي وحيوانات"],["🛠️","معدات وأدوات"],["👕","أزياء ومستلزمات"],["🌾","زراعة ومحاصيل"],["🎮","ألعاب وترفيه"],["🐾","حيوانات أليفة"],["📦","أخرى"]];
+const ads=[{id:1,title:"تويوتا كورولا 2018 بحالة ممتازة",price:"38,000,000",city:"الخرطوم",cat:"سيارات ومركبات",emoji:"🚙",time:"منذ ساعتين"},{id:2,title:"شقة للإيجار – غرفتان وصالة",price:"450,000",city:"أم درمان",cat:"عقارات",emoji:"🏢",time:"منذ 3 ساعات"},{id:3,title:"iPhone 13 Pro نظيف جداً",price:"1,850,000",city:"بورتسودان",cat:"جوالات وأجهزة",emoji:"📱",time:"منذ 5 ساعات"},{id:4,title:"طقم كنب 7 مقاعد",price:"950,000",city:"الخرطوم",cat:"أثاث ومنزل",emoji:"🛋️",time:"أمس"},{id:5,title:"مطلوب محاسب للعمل بدوام كامل",price:"حسب الاتفاق",city:"كسلا",cat:"وظائف وخدمات",emoji:"💼",time:"أمس"},{id:6,title:"خروف بلدي للبيع",price:"780,000",city:"مدني",cat:"مواشي وحيوانات",emoji:"🐑",time:"أمس"}];
+export default function Home(){const [q,SQ]=useState("");const [cat,SC]=useState("الكل");const [city,ST]=useState("كل المدن");const [modal,SM]=useState(false);const filtered=useMemo(()=>ads.filter(a=>(cat==="الكل"||a.cat===cat)&&(city==="كل المدن"||a.city===city)&&(a.title+" "+a.city+" "+a.cat).toLowerCase().includes(q.toLowerCase())),[q,cat,city]);return <><header className="top"><div className="nav wrap"><a className="brand" href="#"><span className="brandmark">ح</span><span>حراج <b>السودان</b><small>سوقك في مكان واحد</small></span></a><nav><a href="#categories">الأقسام</a><a href="#latest">أحدث الإعلانات</a></nav><button className="post" onClick={()=>SM(true)}>＋ أضف إعلانك</button></div></header><main className="wrap"><section className="hero"><div className="heroText"><span className="eyebrow">منصة الإعلانات السودانية</span><h1>بيع، اشتري، ولقّي<br/><em>البتفتش عنه</em></h1><p>كل احتياجاتك من حولك، في مكان واحد. تصفح آلاف الفرص أو أضف إعلانك بسهولة.</p></div><div className="heroArt"><div className="artCircle">🇸🇩</div><span className="float f1">🚗</span><span className="float f2">🏠</span><span className="float f3">📱</span></div><div className="search"><span>⌕</span><input value={q} onChange={e=>SQ(e.target.value)} placeholder="ابحث عن سيارة، عقار، جوال..." /><select value={city} onChange={e=>ST(e.target.value)}><option>كل المدن</option>{["الخرطوم","أم درمان","بورتسودان","كسلا","مدني"].map(x=><option key={x}>{x}</option>)}</select><button onClick={()=>document.getElementById("latest")?.scrollIntoView({behavior:"smooth"})}>ابحث الآن</button></div></section><section id="categories" className="section"><div className="sectionHead"><div><span className="eyebrow red">تصفح كما تحب</span><h2>الأقسام الرئيسية</h2></div><span className="muted">اختر القسم للوصول بسرعة</span></div><div className="categories">{cats.map(([ic,n])=><button key={n} className={cat===n?"category active":"category"} onClick={()=>{SC(cat===n?"الكل":n);document.getElementById("latest")?.scrollIntoView({behavior:"smooth"})}}><span>{ic}</span><b>{n}</b></button>)}</div></section><section id="latest" className="section"><div className="sectionHead"><div><span className="eyebrow red">مختارة من السوق</span><h2>أحدث الإعلانات</h2></div><button className="clear" onClick={()=>{SC("الكل");SQ("");ST("كل المدن")}}>عرض الكل ←</button></div><div className="filters"><button className={cat==="الكل"?"chip selected":"chip"} onClick={()=>SC("الكل")}>الكل</button>{cats.slice(0,5).map(([ic,n])=><button className={cat===n?"chip selected":"chip"} key={n} onClick={()=>SC(n)}>{n}</button>)}</div><div className="ads">{filtered.map(a=><article className="ad" key={a.id}><div className="adImage"><span>{a.emoji}</span><small>مميز</small></div><div className="adBody"><span className="adCat">{a.cat}</span><h3>{a.title}</h3><strong className="price">{a.price} <small>ج.س</small></strong><div className="adMeta"><span>📍 {a.city}</span><span>{a.time}</span></div></div></article>)}</div>{filtered.length===0&&<div className="empty">لا توجد إعلانات تطابق بحثك حالياً.</div>}</section><section className="cta"><div><h2>عندك حاجة للبيع؟</h2><p>اعرضها الآن وخلي آلاف المشترين يشوفوها.</p></div><button className="post light" onClick={()=>SM(true)}>＋ أضف إعلانك مجاناً</button></section></main><footer><div className="wrap foot"><div className="brand"><span className="brandmark">ح</span><span>حراج <b>السودان</b><small>سوقك في مكان واحد</small></span></div><span>© {new Date().getFullYear()} حراج السودان. جميع الحقوق محفوظة.</span></div></footer>{modal&&<div className="overlay" onClick={()=>SM(false)}><div className="dialog" onClick={e=>e.stopPropagation()}><button className="close" onClick={()=>SM(false)}>×</button><h2>إضافة إعلان جديد</h2><p>قريباً ستتمكن من نشر إعلانك بعد إنشاء حسابك.</p><button className="post" onClick={()=>SM(false)}>حسناً</button></div></div>}</>}
