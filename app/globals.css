@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+:root {
+  --background: #f5f6f8;
+  --foreground: #172033;
+  --navy: #14243a;
+  --red: #c62836;
+  --muted: #6b7280;
+}
+* { box-sizing: border-box; }
+html { direction: rtl; }
+body { margin: 0; background: var(--background); color: var(--foreground); font-family: Cairo, Arial, sans-serif; }
+button, input, select { font: inherit; }
+a { color: inherit; text-decoration: none; }
